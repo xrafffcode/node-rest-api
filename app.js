@@ -11,9 +11,11 @@ app.use(cors())
 
 // import routes
 const pegawaiRoutes = require('./routes/pegawai')
+const authRoutes = require('./routes/auth')
 
 // routes
-app.use('/pegawai', pegawaiRoutes)
+app.use('/api/pegawai', pegawaiRoutes)
+app.use('/api/auth', authRoutes)
 
 // connect to mongoDB
 monggoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true })
