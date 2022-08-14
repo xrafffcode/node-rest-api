@@ -2,8 +2,10 @@ const express = require('express')
 const router = express.Router()
 const Pegawai = require('../models/Pegawai')
 
+const verifyToken = require('../routes/verifyToken')
+
 // Create
-router.post('/', async (req, res) => {
+router.post('/', verifyToken, async (req, res) => {
     const pegawaiPost = new Pegawai({
         nama: req.body.nama,
         alamat: req.body.alamat,
@@ -19,7 +21,7 @@ router.post('/', async (req, res) => {
 })
 
 // Read
-router.get('/', async (req, res) => {
+router.get('/', verifyToken, async (req, res) => {
     try {
         const pegawai = await Pegawai.find()
         res.json(pegawai)
@@ -29,7 +31,7 @@ router.get('/', async (req, res) => {
 })
 
 // Update
-router.patch('/:pegawaiId', async (req, res) => {
+router.patch('/:pegawaiId', verifyToken, async (req, res) => {
     try {
         const pegawaiUpdate = await Pegawai.updateOne({ _id: req.params.pegawaiId }, {
             nama: req.body.nama,
@@ -44,7 +46,7 @@ router.patch('/:pegawaiId', async (req, res) => {
 
 
 // Delete
-router.delete('/:pegawaiId', async (req, res) => {
+router.delete('/:pegawaiId', verifyToken, async (req, res) => {
     try {
         const pegawaiDelete = await Pegawai.deleteOne({ _id: req.params.pegawaiId })
         res.json(pegawaiDelete)
